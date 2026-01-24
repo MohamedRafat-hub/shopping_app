@@ -1,3 +1,5 @@
+import 'package:cartzy_app/features/auth/presentation/views/login_and_signup_view.dart';
+import 'package:cartzy_app/features/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -31,19 +33,17 @@ class _OnboardingViewState extends State<OnboardingView> {
                     image: 'assets/images/onboarding1.png',
                     title: 'Discover Trends',
                     decribtion:
-                    'Now we are here to provide variety of the best fashion',
+                        'Now we are here to provide variety of the best fashion',
                   ),
                   BuildPage(
                     image: 'assets/images/onboarding2.png',
                     title: 'Latest out fit',
                     decribtion:
-                    'Express your self through the art of the fashionism',
+                        'Express your self through the art of the fashionism',
                   ),
                 ],
               ),
             ),
-
-            // ✅ Smooth Indicator
             SmoothPageIndicator(
               controller: _controller,
               count: 2,
@@ -54,10 +54,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                 dotColor: Colors.grey,
               ),
             ),
-
             const SizedBox(height: 24),
-
-            // ✅ زر ذكي
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: MaterialButton(
@@ -71,7 +68,12 @@ class _OnboardingViewState extends State<OnboardingView> {
                       curve: Curves.easeInOut,
                     );
                   } else {
-                    print('Go To Login / Home');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return LoginAndSignup();
+                      }),
+                    );
                   }
                 },
                 shape: RoundedRectangleBorder(
@@ -83,7 +85,6 @@ class _OnboardingViewState extends State<OnboardingView> {
                 ),
               ),
             ),
-
             const SizedBox(height: 24),
           ],
         ),
@@ -91,7 +92,6 @@ class _OnboardingViewState extends State<OnboardingView> {
     );
   }
 }
-
 
 class BuildPage extends StatelessWidget {
   const BuildPage({
