@@ -1,3 +1,4 @@
+import 'package:cartzy_app/features/product/presentation/views/product_category_view.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -11,7 +12,9 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, ProductCategoryView.id);
+        },
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
