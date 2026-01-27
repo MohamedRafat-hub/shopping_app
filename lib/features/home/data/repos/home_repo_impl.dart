@@ -1,5 +1,6 @@
 import 'package:cartzy_app/core/errors/failure.dart';
 import 'package:cartzy_app/core/utils/api_service.dart';
+import 'package:cartzy_app/features/home/data/models/categories_model.dart';
 import 'package:cartzy_app/features/home/data/models/product_model.dart';
 import 'package:cartzy_app/features/home/data/repos/home_repo.dart';
 import 'package:dartz/dartz.dart';
@@ -26,6 +27,21 @@ class HomeRepoImpl extends HomeRepo
       if(e is DioException) {
         return left(ServerFailure.fromDioError(e));
       }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CategoriesModel>>> fetchAllCategories()async {
+    try {
+      var data =await apiService.get(endPoint: 'categories');
+      final List<CategoriesModel> categories =  data.map((item) => CategoriesModel.fromJson(item)).toList();
+      return right(categories);
+    } on Exception catch (e) {
+      if(e is DioException)
+        {
+          return left(ServerFailure.fromDioError(e));
+        }
       return left(ServerFailure(e.toString()));
     }
   }

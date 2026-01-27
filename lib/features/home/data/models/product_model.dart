@@ -29,7 +29,7 @@ class ProductModel {
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
         : null;
-    images = json['images'].cast<String>();
+    images = json['images'] !=null ? json['images'].cast<String>() : [];
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
   }

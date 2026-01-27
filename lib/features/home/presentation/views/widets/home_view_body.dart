@@ -1,4 +1,5 @@
 import 'package:cartzy_app/features/home/data/models/product_model.dart';
+import 'package:cartzy_app/features/home/presentation/managers/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'package:cartzy_app/features/home/presentation/managers/get_all_products_Cubit/get_all_products_cubit.dart';
 import 'package:cartzy_app/features/home/presentation/views/widets/custom_text_button.dart';
 import 'package:cartzy_app/features/home/presentation/views/widets/product_component.dart';
@@ -39,15 +40,7 @@ class HomeViewBody extends StatelessWidget {
             SliverToBoxAdapter(
               child: SizedBox(
                 height: 40,
-                child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: CustomTextButton(buttonName: 'Shoes'),
-                      );
-                    }),
+                child: GetAllCategories(),
               ),
             ),
             SliverToBoxAdapter(
@@ -59,6 +52,49 @@ class HomeViewBody extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class GetAllCategories extends StatelessWidget {
+  const GetAllCategories({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesState>(
+      builder: (context, state) {
+        if (state is GetAllCategoriesSuccess) {
+          return ListView.builder(
+              itemCount: state.categories.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: CustomTextButton(
+                      buttonName: state.categories[index].name.toString()),
+                );
+              });
+        } else if (state is GetAllCategoriesLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (state is GetAllCategoriesFailure) {
+          return Center(
+              child: Text(
+            '${state.errorMessage}',
+            style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500 ,fontSize: 16),
+          ));
+        }
+        else
+          {
+            return Center(
+                child: Text(
+                  'There was an error please try again',
+                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500 ,fontSize: 16),
+                ));
+          }
+
+      },
     );
   }
 }
@@ -86,9 +122,9 @@ class CustomGridView extends StatelessWidget {
               childAspectRatio: 0.7,
             ),
           );
-        }
-        else if (state is GetAllProductsLoading) {
-          return SliverFillRemaining(child: Center(child: CircularProgressIndicator()));
+        } else if (state is GetAllProductsLoading) {
+          return SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator()));
         } else if (state is GetAllProductsFailure) {
           return SliverToBoxAdapter(
               child: Center(
@@ -97,11 +133,11 @@ class CustomGridView extends StatelessWidget {
             style: TextStyle(
                 color: Colors.red, fontSize: 16, fontWeight: FontWeight.w500),
           )));
+        } else {
+          return SliverToBoxAdapter(
+              child:
+                  Center(child: Text('There was an error , please try later')));
         }
-        else
-          {
-            return SliverToBoxAdapter(child: Center(child: Text('There was an error , please try later')));
-          }
       },
     );
   }

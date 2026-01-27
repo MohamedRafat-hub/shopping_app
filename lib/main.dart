@@ -3,6 +3,7 @@ import 'package:cartzy_app/features/auth/presentation/views/login_view.dart';
 import 'package:cartzy_app/features/auth/presentation/views/signup_view.dart';
 import 'package:cartzy_app/features/cart/presentation/views/cart_view.dart';
 import 'package:cartzy_app/features/home/data/repos/home_repo_impl.dart';
+import 'package:cartzy_app/features/home/presentation/managers/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'package:cartzy_app/features/home/presentation/managers/get_all_products_Cubit/get_all_products_cubit.dart';
 import 'package:cartzy_app/features/home/presentation/views/home_view.dart';
 import 'package:cartzy_app/features/product/presentation/views/product_category_view.dart';
@@ -28,6 +29,10 @@ class ShoppingApp extends StatelessWidget {
       providers: [
         BlocProvider<GetAllProductsCubit>(create: (context) {
           return GetAllProductsCubit(getIt<HomeRepoImpl>())..fetchAllProducts();
+        }),
+
+        BlocProvider(create: (context) {
+          return GetAllCategoriesCubit(getIt<HomeRepoImpl>())..getAllCategories();
         }),
       ],
       child: MaterialApp(
