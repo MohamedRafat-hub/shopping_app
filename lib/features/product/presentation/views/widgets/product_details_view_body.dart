@@ -1,3 +1,4 @@
+import 'package:cartzy_app/features/home/data/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 
@@ -11,6 +12,7 @@ class ProductDetailsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final product = ModalRoute.of(context)!.settings.arguments as ProductModel;
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
       child: SingleChildScrollView(
@@ -29,16 +31,21 @@ class ProductDetailsViewBody extends StatelessWidget {
                 )),
             SizedBox(
                 height: 300,
-                child: ProductItem()),
+                child: ProductItem(
+                  image: product.images![0],
+                )),
             Row(
               children: [
-                Text(
-                  'T-shirt oversize',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    product.title ?? 'No title',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 Spacer(),
                 Text(
-                  'EGP 199',
+                  '${product.price} EGP',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -47,7 +54,7 @@ class ProductDetailsViewBody extends StatelessWidget {
               ],
             ),
             ReadMoreText(
-              'Elevate your casual wardrobe with our Classic Red Pullover Hoodie. Crafted with a soft cotton blend for ultimate comfort, this vibrant red hoodie features a kangaroo pocket, adjustable drawstring hood, and ribbed cuffs for a snug fit. The timeless design ensures easy pairing with jeans or joggers for a relaxed yet stylish look, making it a versatile addition to your everyday attire',
+             product.description ?? 'No description',
               trimLines: 3,
               trimMode: TrimMode.Line,
               trimCollapsedText: 'Read more',

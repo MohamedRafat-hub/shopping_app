@@ -27,7 +27,7 @@ class ProductCategoryViewBody extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, ProductDetailsView.id);
+                        Navigator.pushNamed(context, ProductDetailsView.id , arguments: state.products[index]);
                       },
                       child: ProductComponent(
                         productModel: state.products[index],
