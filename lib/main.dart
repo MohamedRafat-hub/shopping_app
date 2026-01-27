@@ -6,6 +6,8 @@ import 'package:cartzy_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:cartzy_app/features/home/presentation/managers/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'package:cartzy_app/features/home/presentation/managers/get_all_products_Cubit/get_all_products_cubit.dart';
 import 'package:cartzy_app/features/home/presentation/views/home_view.dart';
+import 'package:cartzy_app/features/product/data/repos/category_repo_impl.dart';
+import 'package:cartzy_app/features/product/presentation/managers/products_category_cubit/get_products_by_category_cubit.dart';
 import 'package:cartzy_app/features/product/presentation/views/product_category_view.dart';
 import 'package:cartzy_app/features/product/presentation/views/product_details_view.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,6 @@ void main() {
 }
 
 
-
 class ShoppingApp extends StatelessWidget {
   const ShoppingApp({super.key});
 
@@ -28,11 +29,17 @@ class ShoppingApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GetAllProductsCubit>(create: (context) {
-          return GetAllProductsCubit(getIt<HomeRepoImpl>())..fetchAllProducts();
+          return GetAllProductsCubit(getIt<HomeRepoImpl>())
+            ..fetchAllProducts();
         }),
 
         BlocProvider(create: (context) {
-          return GetAllCategoriesCubit(getIt<HomeRepoImpl>())..getAllCategories();
+          return GetAllCategoriesCubit(getIt<HomeRepoImpl>())
+            ..getAllCategories();
+        }),
+
+        BlocProvider(create: (context) {
+          return GetProductsCategoryCubit(getIt<CategoryRepoImpl>());
         }),
       ],
       child: MaterialApp(

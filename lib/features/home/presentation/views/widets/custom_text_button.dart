@@ -1,5 +1,7 @@
+import 'package:cartzy_app/features/product/presentation/managers/products_category_cubit/get_products_by_category_cubit.dart';
 import 'package:cartzy_app/features/product/presentation/views/product_category_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
@@ -13,7 +15,8 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: () {
-          Navigator.pushNamed(context, ProductCategoryView.id);
+          BlocProvider.of<GetProductsCategoryCubit>(context).getProductsByCategory();
+          Navigator.pushNamed(context, ProductCategoryView.id ,arguments: buttonName);
         },
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(

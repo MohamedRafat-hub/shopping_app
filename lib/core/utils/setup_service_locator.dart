@@ -1,3 +1,4 @@
+import 'package:cartzy_app/features/product/data/repos/category_repo_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -13,4 +14,6 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<HomeRepoImpl>(
           () => HomeRepoImpl(apiService: getIt.get<ApiService>()));
+
+  getIt.registerLazySingleton<CategoryRepoImpl>(()=> CategoryRepoImpl(getIt.get<ApiService>()));
 }
