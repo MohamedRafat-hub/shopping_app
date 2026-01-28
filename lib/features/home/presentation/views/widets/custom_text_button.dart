@@ -4,20 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomTextButton extends StatelessWidget {
-  const CustomTextButton({
+   CustomTextButton({
     super.key,
     required this.buttonName,
+    this.onPressed
   });
 
   final String buttonName;
-
+  void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {
-          BlocProvider.of<GetProductsCategoryCubit>(context).getProductsByCategory();
-          Navigator.pushNamed(context, ProductCategoryView.id ,arguments: buttonName);
-        },
+      onPressed: onPressed,
+        // onPressed: () {
+        //   BlocProvider.of<GetProductsCategoryCubit>(context).getProductsByCategory();
+        //   Navigator.pushNamed(context, ProductCategoryView.id ,arguments: buttonName);
+        // },
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),

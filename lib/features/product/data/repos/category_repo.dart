@@ -4,5 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class CategoryRepo
 {
-  Future<Either<Failure , List<ProductModel>>>getProductsByCategory();
+  Future<Either<Failure , List<ProductModel>>>getProductsByCategory({required int id});
 }

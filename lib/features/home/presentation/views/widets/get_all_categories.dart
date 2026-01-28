@@ -1,6 +1,8 @@
+import 'package:cartzy_app/features/product/presentation/managers/products_category_cubit/get_products_by_category_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../product/presentation/views/product_category_view.dart';
 import '../../managers/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'custom_text_button.dart';
 
@@ -21,6 +23,11 @@ class GetAllCategories extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: CustomTextButton(
+                      onPressed: () {
+                        BlocProvider.of<GetProductsCategoryCubit>(context)
+                            .getProductsByCategory(id: index);
+                        Navigator.pushNamed(context, ProductCategoryView.id , arguments:state.categories[index].name.toString() );
+                      },
                       buttonName: state.categories[index].name.toString()),
                 );
               });
@@ -29,19 +36,18 @@ class GetAllCategories extends StatelessWidget {
         } else if (state is GetAllCategoriesFailure) {
           return Center(
               child: Text(
-                '${state.errorMessage}',
-                style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500 ,fontSize: 16),
-              ));
-        }
-        else
-        {
+            '${state.errorMessage}',
+            style: TextStyle(
+                color: Colors.red, fontWeight: FontWeight.w500, fontSize: 16),
+          ));
+        } else {
           return Center(
               child: Text(
-                'There was an error please try again',
-                style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500 ,fontSize: 16),
-              ));
+            'There was an error please try again',
+            style: TextStyle(
+                color: Colors.red, fontWeight: FontWeight.w500, fontSize: 16),
+          ));
         }
-
       },
     );
   }

@@ -12,10 +12,10 @@ class GetProductsCategoryCubit extends Cubit<GetProductsByCategoryState> {
 
   final CategoryRepo categoryRepo;
 
-  Future<void> getProductsByCategory() async
+  Future<void> getProductsByCategory({required int id}) async
   {
     emit(GetProductsByCategoryLoading());
-    var result = await categoryRepo.getProductsByCategory();
+    var result = await categoryRepo.getProductsByCategory(id: id);
 
     result.fold((failure) =>
         emit(GetProductsCategoryFailure(failure.errorMessage)), (products) =>

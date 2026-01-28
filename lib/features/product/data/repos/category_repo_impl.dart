@@ -11,9 +11,9 @@ class CategoryRepoImpl extends CategoryRepo {
   CategoryRepoImpl(this.apiService);
 
   @override
-  Future<Either<Failure, List<ProductModel>>> getProductsByCategory() async {
+  Future<Either<Failure, List<ProductModel>>> getProductsByCategory({required int id}) async {
     try {
-      var data = await apiService.get(endPoint: 'products');
+      var data = await apiService.getProductByCategory(endPoint: 'categories/1/products?', id: id);
 
       List<ProductModel> products =
           data.map((item) => ProductModel.fromJson(item)).toList();

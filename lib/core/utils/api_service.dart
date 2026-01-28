@@ -12,6 +12,13 @@ class ApiService {
     return response.data;
   }
 
+
+
+  Future<List<dynamic>> getProductByCategory({required String endPoint , required int id}) async {
+    Response response = await _dio.get('$_baseUrl${endPoint}id=$id');
+    return response.data;
+  }
+
   Future<Map<String ,dynamic>>post({required String endPoint , required Map<String , dynamic>data}) async {
     Response response = await _dio.post('$_baseUrl$endPoint' , data: data);
     return response.data;
