@@ -26,7 +26,7 @@ class ProductComponent extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          'EGP ${productModel.price}',
+          '${productModel.price} EGP',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ],
