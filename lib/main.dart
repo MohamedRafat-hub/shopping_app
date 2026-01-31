@@ -1,7 +1,11 @@
+import 'package:cartzy_app/core/constants.dart';
 import 'package:cartzy_app/core/utils/simple_bloc_observer.dart';
+import 'package:cartzy_app/features/auth/presentation/views/account_view.dart';
 import 'package:cartzy_app/features/auth/presentation/views/login_view.dart';
 import 'package:cartzy_app/features/auth/presentation/views/signup_view.dart';
 import 'package:cartzy_app/features/cart/presentation/views/cart_view.dart';
+import 'package:cartzy_app/features/favourite/presentation/views/favourite_view.dart';
+import 'package:cartzy_app/features/home/data/models/product_model.dart';
 import 'package:cartzy_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:cartzy_app/features/home/presentation/managers/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'package:cartzy_app/features/home/presentation/managers/get_all_products_Cubit/get_all_products_cubit.dart';
@@ -12,14 +16,19 @@ import 'package:cartzy_app/features/product/presentation/views/product_category_
 import 'package:cartzy_app/features/product/presentation/views/product_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'core/utils/setup_service_locator.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   setupServiceLocator();
   Bloc.observer = SimpleBlocObserver();
+  await Hive.initFlutter();
+  Hive.registerAdapter(ProductModelAdapter());
+  await Hive.openBox<ProductModel>(KFavouritesBox);
   runApp(const ShoppingApp());
 }
-
 
 class ShoppingApp extends StatelessWidget {
   const ShoppingApp({super.key});
@@ -29,15 +38,12 @@ class ShoppingApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<GetAllProductsCubit>(create: (context) {
-          return GetAllProductsCubit(getIt<HomeRepoImpl>())
-            ..fetchAllProducts();
+          return GetAllProductsCubit(getIt<HomeRepoImpl>())..fetchAllProducts();
         }),
-
         BlocProvider(create: (context) {
           return GetAllCategoriesCubit(getIt<HomeRepoImpl>())
             ..getAllCategories();
         }),
-
         BlocProvider(create: (context) {
           return GetProductsCategoryCubit(getIt<CategoryRepoImpl>());
         }),
@@ -51,6 +57,8 @@ class ShoppingApp extends StatelessWidget {
           LoginView.id: (context) => LoginView(),
           ProductDetailsView.id: (context) => ProductDetailsView(),
           CartView.id: (context) => CartView(),
+          FavouriteView.id: (context) => FavouriteView(),
+          AccountView.id : (context) =>AccountView(),
         },
         theme: ThemeData(
           appBarTheme: AppBarTheme(

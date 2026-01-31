@@ -1,24 +1,36 @@
-class ProductModel {
+import 'package:hive/hive.dart';
+part 'product_model.g.dart';
+@HiveType(typeId: 1)
+class ProductModel extends HiveObject {
+  @HiveField(0)
   int? id;
+  @HiveField(1)
   String? title;
+  @HiveField(2)
   String? slug;
+  @HiveField(3)
   int? price;
+  @HiveField(4)
   String? description;
+  @HiveField(5)
   Category? category;
+  @HiveField(6)
   List<String>? images;
+  @HiveField(7)
   String? creationAt;
+  @HiveField(8)
   String? updatedAt;
 
   ProductModel(
       {this.id,
-        this.title,
-        this.slug,
-        this.price,
-        this.description,
-        this.category,
-        this.images,
-        this.creationAt,
-        this.updatedAt});
+      this.title,
+      this.slug,
+      this.price,
+      this.description,
+      this.category,
+      this.images,
+      this.creationAt,
+      this.updatedAt});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -29,7 +41,7 @@ class ProductModel {
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
         : null;
-    images = json['images'] !=null ? json['images'].cast<String>() : [];
+    images = json['images'] != null ? json['images'].cast<String>() : [];
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
   }
@@ -61,11 +73,11 @@ class Category {
 
   Category(
       {this.id,
-        this.name,
-        this.slug,
-        this.image,
-        this.creationAt,
-        this.updatedAt});
+      this.name,
+      this.slug,
+      this.image,
+      this.creationAt,
+      this.updatedAt});
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];

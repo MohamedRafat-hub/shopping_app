@@ -1,4 +1,3 @@
-import 'package:cartzy_app/features/home/presentation/views/widets/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class CartView extends StatelessWidget {
@@ -18,7 +17,6 @@ class CartView extends StatelessWidget {
         centerTitle: true,
       ),
       body: CartInfo(),
-      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }

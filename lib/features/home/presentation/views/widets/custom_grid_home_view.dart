@@ -19,7 +19,7 @@ class CustomGridView extends StatelessWidget {
               return ProductComponent(
                 productModel: state.products[index],
               );
-            }, childCount: 20),
+            }, childCount: state.products.length),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 20,
